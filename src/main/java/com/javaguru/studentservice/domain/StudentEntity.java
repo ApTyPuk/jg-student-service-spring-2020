@@ -1,21 +1,21 @@
-package com.javaguru.studentservice.dto;
+package com.javaguru.studentservice.domain;
+
 
 import java.util.Objects;
 
-public class StudentDto {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "students")
+public class StudentEntity {
+
+    @Id
     private String id;
     private String name;
     private String lastName;
 
-    public StudentDto() {
-    }
-
-    public StudentDto(String id, String name, String lastName) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-    }
 
     public String getId() {
         return id;
@@ -45,7 +45,7 @@ public class StudentDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentDto that = (StudentDto) o;
+        StudentEntity that = (StudentEntity) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(lastName, that.lastName);
@@ -58,7 +58,7 @@ public class StudentDto {
 
     @Override
     public String toString() {
-        return "StudentDto{" +
+        return "StudentEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
