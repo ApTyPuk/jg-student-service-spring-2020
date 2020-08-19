@@ -1,21 +1,20 @@
-package com.javaguru.studentservice.domain;
-
+package com.javaguru.studentservice.student.dto;
 
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "students")
-public class StudentEntity {
+public class StudentUpdateRequest {
 
-    @Id
+    @NotEmpty
     private String id;
+    @NotEmpty
+    @Size(min = 2, max = 32)
     private String name;
+    @NotEmpty
+    @Size(min = 2, max = 32)
     private String lastName;
-
 
     public String getId() {
         return id;
@@ -45,7 +44,7 @@ public class StudentEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentEntity that = (StudentEntity) o;
+        StudentUpdateRequest that = (StudentUpdateRequest) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(lastName, that.lastName);
@@ -58,7 +57,7 @@ public class StudentEntity {
 
     @Override
     public String toString() {
-        return "StudentEntity{" +
+        return "StudentUpdateRequest{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +

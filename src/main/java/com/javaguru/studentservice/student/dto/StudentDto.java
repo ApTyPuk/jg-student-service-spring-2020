@@ -1,11 +1,24 @@
-package com.javaguru.studentservice.dto;
+package com.javaguru.studentservice.student.dto;
 
 import java.util.Objects;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
+
 public class StudentDto {
 
+    @Null(groups = Create.class)
+    @NotNull(groups = Update.class)
     private String id;
+
+    @NotEmpty(groups = {Create.class, Update.class})
+    @Size(min = 2, max = 32, groups = {Create.class, Update.class})
     private String name;
+
+    @NotEmpty(groups = {Create.class, Update.class})
+    @Size(min = 2, max = 32, groups = {Create.class, Update.class})
     private String lastName;
 
     public StudentDto() {
@@ -63,5 +76,11 @@ public class StudentDto {
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
+    }
+
+    public interface Update {
+    }
+
+    public interface Create {
     }
 }
