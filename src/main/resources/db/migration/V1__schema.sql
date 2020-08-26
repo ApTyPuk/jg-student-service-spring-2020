@@ -1,0 +1,5 @@
+CREATE TABLE students (
+    id VARCHAR(40) NOT NULL PRIMARY KEY,
+    last_name VARCHAR(30) NOT NULL,
+    name VARCHAR(30) NOT NULL
+);

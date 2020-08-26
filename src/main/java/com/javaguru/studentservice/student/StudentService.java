@@ -1,5 +1,7 @@
 package com.javaguru.studentservice.student;
 
+import com.javaguru.studentservice.quote.QuoteDto;
+import com.javaguru.studentservice.quote.QuoteService;
 import com.javaguru.studentservice.student.domain.StudentEntity;
 import com.javaguru.studentservice.student.dto.StudentCreateRequest;
 import com.javaguru.studentservice.student.dto.StudentResponse;
@@ -16,16 +18,21 @@ import java.util.stream.Collectors;
 public class StudentService {
 
     private final StudentRepository repository;
+    private final QuoteService quoteService;
 
-    StudentService(StudentRepository repository) {
+    StudentService(StudentRepository repository, QuoteService quoteService) {
         this.repository = repository;
+        this.quoteService = quoteService;
     }
 
     public StudentResponse save(StudentCreateRequest request) {
+        QuoteDto quoteDto = quoteService.findRandomQuote();
+
         StudentEntity studentEntity = new StudentEntity();
         studentEntity.setId(UUID.randomUUID().toString());
         studentEntity.setName(request.getName());
         studentEntity.setLastName(request.getLastName());
+        studentEntity.setQuote(quoteDto.getEnglishQuote());
 
         repository.save(studentEntity);
 

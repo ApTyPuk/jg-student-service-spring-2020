@@ -10,6 +10,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/student_service
 
-quotes:
-  url: google.com
-  api-key: secret
+quote:
+  urls:
+    base-url: https://programming-quotes-api.herokuapp.com/quotes
+    random-quote: ${quote.urls.base-url}/random
+    quote-by-id: ${quote.urls.base-url}/id/{id}

@@ -1,0 +1,1 @@
+ALTER TABLE students DROP CONSTRAINT students_uq_last_name;
