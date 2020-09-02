@@ -21,6 +21,8 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	implementation 'org.flywaydb:flyway-core'
+	testImplementation('com.h2database:h2:1.4.200')
+
 
 }
 

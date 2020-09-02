@@ -4,6 +4,8 @@ import com.javaguru.studentservice.student.dto.StudentCreateRequest;
 import com.javaguru.studentservice.student.dto.StudentResponse;
 import com.javaguru.studentservice.student.dto.StudentUpdateRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +27,8 @@ import javax.validation.Valid;
 @RequestMapping("/students")
 public class StudentController {
 
+    private static final Logger log = LoggerFactory.getLogger(StudentController.class);
+
     private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
@@ -33,35 +37,39 @@ public class StudentController {
 
     @GetMapping
     public List<StudentResponse> findAllStudents() {
+        log.info("Received find all students request");
         return studentService.findAllStudents();
     }
 
     @GetMapping("/{id}")
     public StudentResponse findStudentById(@PathVariable String id) {
-        System.out.println("Received find student by id request, id: " + id);
+        log.info("Received find student by id request, id: {}", id);
         return studentService.findById(id);
     }
 
     @PostMapping
     public ResponseEntity<StudentResponse> createStudent(@Valid @RequestBody StudentCreateRequest request, UriComponentsBuilder builder) {
-        System.out.println("Received create student request: " + request);
+        log.info("Received create student request: {}", request);
         StudentResponse response = studentService.save(request);
         return ResponseEntity.created(
                 builder.path("/students/{id}")
-                        .buildAndExpand(response.getId()).toUri()).build();
+                        .buildAndExpand(response.getId())
+                        .toUri()
+        )
+                .body(response);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void updateStudent(@PathVariable String id, @Valid @RequestBody StudentUpdateRequest request) {
-        System.out.println("Received request update student: " + request);
+        log.info("Received request update student: {}", request);
         studentService.update(request, id);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
-        System.out.println("Received delete student by id " + id);
+        log.info("Received delete student by id: {}", id);
         studentService.deleteStudentById(id);
     }
 

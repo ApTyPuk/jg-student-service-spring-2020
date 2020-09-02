@@ -36,12 +36,12 @@ public class StudentService {
 
         repository.save(studentEntity);
 
-        return new StudentResponse(studentEntity.getId(), studentEntity.getName(), studentEntity.getLastName());
+        return new StudentResponse(studentEntity.getId(), studentEntity.getName(), studentEntity.getLastName(), studentEntity.getQuote());
     }
 
     public StudentResponse findById(String id) {
         return repository.findById(id)
-                .map(entity -> new StudentResponse(entity.getId(), entity.getName(), entity.getLastName()))
+                .map(studentEntity -> new StudentResponse(studentEntity.getId(), studentEntity.getName(), studentEntity.getLastName(), studentEntity.getQuote()))
                 .orElseThrow(() -> new StudentNotFoundException("Student not found, id=" + id));
     }
 
@@ -56,9 +56,10 @@ public class StudentService {
     public List<StudentResponse> findAllStudents() {
         return repository.findAll()
                 .stream()
-                .map(student -> new StudentResponse(student.getId(),
-                        student.getName(),
-                        student.getLastName()))
+                .map(studentEntity -> new StudentResponse(studentEntity.getId(),
+                        studentEntity.getName(),
+                        studentEntity.getLastName(),
+                        studentEntity.getQuote()))
                 .collect(Collectors.toList());
     }
 
